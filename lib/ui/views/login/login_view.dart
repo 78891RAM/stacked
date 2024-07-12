@@ -1,6 +1,8 @@
 // lib/ui/views/login_view.dart
 
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:my_first_app/ui/common/label_input/label_input_view.dart';
 import 'package:stacked/stacked.dart';
 
 import 'login_viewmodel.dart';
@@ -13,23 +15,23 @@ class LoginView extends StatelessWidget {
     return ViewModelBuilder<LoginViewModel>.reactive(
       viewModelBuilder: () => LoginViewModel(),
       builder: (context, model, child) => Scaffold(
-        appBar: AppBar(title: const Text('Login')),
-        body: Center(
-          child: Padding(
+        body: Padding(
             padding: const EdgeInsets.all(20.0),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                TextField(
-                  onChanged: model.setEmail,
-                  decoration: const InputDecoration(labelText: 'Email'),
+                LabelInputView(
+                  hintText: 'Enter Your Email Here ...',
+                  label: 'Email',
+                  onChangeFunc: model.setEmail,
+                  isEmptyErr: model.emailError,
                 ),
                 const SizedBox(height: 20),
-                TextField(
-                  // controller: ,
-                  onChanged: model.setPassword,
-                  decoration: const InputDecoration(labelText: 'Password'),
-                  obscureText: true,
+                LabelInputView(
+                  hintText: 'Enter Your Password Here ...',
+                  label: 'Password',
+                  onChangeFunc: model.setPassword,
+                  isRequired: true,
+                  isEmptyErr: model.passwordError,
                 ),
                 const SizedBox(height: 20),
                 ElevatedButton(
@@ -43,10 +45,12 @@ class LoginView extends StatelessWidget {
                   },
                   child: const Text('Login'),
                 ),
+                Text(model.email),
+                Text(model.password)
               ],
-            ),
-          ),
-        ),
+            )),
+        backgroundColor: Color(0xFF2A2843),
+        // ,
       ),
     );
   }
